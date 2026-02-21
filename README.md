@@ -1,15 +1,20 @@
 # TodoList
 
-project for making, filtering, deleting, editing tasks
+A simple app for managing tasks.
 
 ## Demo
 
-todo-list-raz.vercel.app
+[todo-list-raz.vercel.app](https://todo-list-raz.vercel.app)
+
+## Features
+
+- Create, edit, delete tasks
+- Filter by status
 
 ## Screenshots
 
-<img width="1919" height="913" alt="Снимок экрана 2026-02-21 165234" src="https://github.com/user-attachments/assets/c53ee1e8-2baf-4c7a-8559-79d3f70783c3" />
+![TodoList Screenshot](assets/screenshot.png)
 
 ## Stack
 
-HTML, CSS, JavaScript
+HTML · CSS · JavaScript
