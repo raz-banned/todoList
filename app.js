@@ -7,15 +7,15 @@
 // 4. Добавь обработчики событий
 
 // получение с dom
-const button = document.querySelector("#addButton");
-const list = document.querySelector("#todoList");
-const clear = document.querySelector("#clearCompleted");
-const filterBtns = document.querySelector(".filters");
-const counter = document.querySelector("#counter");
-const input = document.querySelector("#todoInput");
+const button = document.querySelector('#addButton');
+const list = document.querySelector('#todoList');
+const clear = document.querySelector('#clearCompleted');
+const filterBtns = document.querySelector('.filters');
+const counter = document.querySelector('#counter');
+const input = document.querySelector('#todoInput');
 
 // массив задач
-let todoList = JSON.parse(localStorage.getItem("todos")) || [];
+let todoList = JSON.parse(localStorage.getItem('todos')) || [];
 
 // обновление и сохранение значений
 const updateCounter = () => {
@@ -24,7 +24,7 @@ const updateCounter = () => {
 };
 
 const storageSave = () => {
-  localStorage.setItem("todos", JSON.stringify(todoList));
+  localStorage.setItem('todos', JSON.stringify(todoList));
 };
 
 // вызов с хранилища если есть
@@ -56,27 +56,27 @@ function createTodo() {
   updateCounter();
   storageSave();
   renderTodo(createInstance);
-  input.value = "";
+  input.value = '';
 }
 
 // рендеринг в dom
 function renderTodo(todoInstance) {
   // элементы с dom
-  const item = document.createElement("li");
-  const itemText = document.createElement("span");
-  const deleteBtn = document.createElement("button");
+  const item = document.createElement('li');
+  const itemText = document.createElement('span');
+  const deleteBtn = document.createElement('button');
 
   // присваивание свойств
-  item.classList = "todo-item";
+  item.classList = 'todo-item';
   if (todoInstance.completed) {
-    item.classList.add("completed");
+    item.classList.add('completed');
   }
 
-  itemText.classList = "todo-text";
+  itemText.classList = 'todo-text';
   itemText.textContent = todoInstance.text;
 
-  deleteBtn.textContent = "X";
-  deleteBtn.classList = "delete-btn";
+  deleteBtn.textContent = 'X';
+  deleteBtn.classList = 'delete-btn';
 
   // добавление в dom
   item.appendChild(itemText);
@@ -86,15 +86,15 @@ function renderTodo(todoInstance) {
   updateCounter();
 
   // слушатели
-  itemText.addEventListener("click", () => {
+  itemText.addEventListener('click', () => {
     completed(todoInstance, item);
   });
 
-  deleteBtn.addEventListener("click", () => {
+  deleteBtn.addEventListener('click', () => {
     remove(todoInstance, item);
   });
 
-  const events = ["dblclick", "keydown", "blur"];
+  const events = ['dblclick', 'keydown', 'blur'];
   events.forEach((event) => {
     itemText.addEventListener(event, (e) => edit(e, itemText, todoInstance));
   });
@@ -102,7 +102,7 @@ function renderTodo(todoInstance) {
 
 // триггеры функции от слушателя
 const completed = (info, listELement) => {
-  listELement.classList.toggle("completed");
+  listELement.classList.toggle('completed');
   info.completed = !info.completed;
 
   updateCounter();
@@ -124,66 +124,66 @@ const remove = (info, listElement) => {
 // фильтры
 
 function filter(e) {
-  const btn = document.querySelectorAll(".filter-btn");
+  const btn = document.querySelectorAll('.filter-btn');
 
   const filterType = e.target.dataset.filter;
   if (!filterType) return;
 
   btn.forEach((btn) => {
-    btn.classList.remove("active");
-    e.target.classList.add("active");
+    btn.classList.remove('active');
+    e.target.classList.add('active');
   });
 
-  const items = document.querySelectorAll(".todo-item");
+  const items = document.querySelectorAll('.todo-item');
   items.forEach((item) => {
-    item.classList.remove("hidden");
+    item.classList.remove('hidden');
 
-    if (filterType === "active") {
-      if (item.classList.contains("completed")) item.classList.add("hidden");
+    if (filterType === 'active') {
+      if (item.classList.contains('completed')) item.classList.add('hidden');
     }
-    if (filterType === "completed") {
-      if (!item.classList.contains("completed")) item.classList.add("hidden");
+    if (filterType === 'completed') {
+      if (!item.classList.contains('completed')) item.classList.add('hidden');
     }
   });
 }
 
-filterBtns.addEventListener("click", (e) => {
+filterBtns.addEventListener('click', (e) => {
   filter(e);
 });
 
 const clearAll = () => {
-  const item = document.querySelectorAll("li");
+  const item = document.querySelectorAll('li');
   const filteredList = todoList.filter((element) => !element.completed);
   todoList = filteredList;
 
   item.forEach((element) => {
-    if (element.classList.contains("completed")) element.remove();
+    if (element.classList.contains('completed')) element.remove();
   });
 
   updateCounter();
   storageSave();
 };
 
-clear.addEventListener("click", clearAll);
+clear.addEventListener('click', clearAll);
 
 function edit(e, text, info) {
-  if (e.type === "dblclick") {
+  if (e.type === 'dblclick') {
     text.contentEditable = true;
     text.focus();
   }
   // 2. Обработка клавиш (только если это keydown)
-  if (e.type === "keydown") {
-    if (e.key === "Enter") {
+  if (e.type === 'keydown') {
+    if (e.key === 'Enter') {
       e.preventDefault(); // Отменяем перенос строки
       text.blur(); // Просто вызываем blur, а остальное сделает обработчик blur
     }
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       text.contentEditable = false; // Отмена без сохранения (опционально)
     }
   }
 
   // 3. Сохранение (срабатывает при потере фокуса или вызове .blur())
-  if (e.type === "blur" && text.contentEditable === "true") {
+  if (e.type === 'blur' && text.contentEditable === 'true') {
     if (text.textContent.trim().length < 1) {
       text.textContent = info.text; // вернуть старый текст
     } else {
@@ -192,12 +192,12 @@ function edit(e, text, info) {
     }
     text.contentEditable = false;
     // Здесь можно вызвать функцию обновления в БД или API
-    console.log("Сохранено:", info.text);
+    console.log('Сохранено:', info.text);
   }
 }
 
 // слушатель создания задачи
-button.addEventListener("click", createTodo);
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") createTodo();
+button.addEventListener('click', createTodo);
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') createTodo();
 });
